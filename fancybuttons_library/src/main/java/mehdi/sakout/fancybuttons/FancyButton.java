@@ -327,10 +327,11 @@ public class FancyButton extends LinearLayout {
         mGhost = attrsArray.getBoolean(R.styleable.FancyButtonsAttrs_fb_ghost, mGhost);
         mUseSystemFont = attrsArray.getBoolean(R.styleable.FancyButtonsAttrs_fb_useSystemFont, mUseSystemFont);
 
-        String text = attrsArray.getString(R.styleable.FancyButtonsAttrs_fb_text);
-
-        if (text == null) { //no fb_text attribute
-            text = attrsArray.getString(R.styleable.FancyButtonsAttrs_android_text);
+        String text = null;
+        if (attrsArray.hasValue(R.styleable.FancyButtonsAttrs_fb_text)) {
+            text = attrsArray.getResources().getString(attrsArray.getResourceId(R.styleable.FancyButtonsAttrs_fb_text, 0));
+        } else if (attrsArray.hasValue(R.styleable.FancyButtonsAttrs_android_text)) { //no fb_text attribute
+            text = attrsArray.getResources().getString(attrsArray.getResourceId(R.styleable.FancyButtonsAttrs_android_text, 0));
         }
 
         mIconPosition = attrsArray.getInt(R.styleable.FancyButtonsAttrs_fb_iconPosition, mIconPosition);
