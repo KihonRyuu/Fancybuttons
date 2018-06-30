@@ -371,7 +371,12 @@ public class FancyButton extends LinearLayout {
             }
 
             if (textFontFamily != null) {
-                mTextTypeFace = Utils.findFont(mContext, textFontFamily, mDefaultTextFont);
+                int fontResourceId = attrsArray.getResourceId(R.styleable.FancyButtonsAttrs_fb_textFont, 0);
+                if (fontResourceId != 0) {
+                    mTextTypeFace = ResourcesCompat.getFont(mContext, fontResourceId);
+                } else {
+                    mTextTypeFace = Utils.findFont(mContext, textFontFamily, mDefaultTextFont);
+                }
             } else {
                 mTextTypeFace = Utils.findFont(mContext, mDefaultTextFont, null);
             }
