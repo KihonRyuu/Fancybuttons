@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.Outline;
@@ -374,7 +375,12 @@ public class FancyButton extends LinearLayout {
             if (textFontFamily != null) {
                 int fontResourceId = attrsArray.getResourceId(R.styleable.FancyButtonsAttrs_fb_textFont, 0);
                 if (fontResourceId != 0) {
-                    mTextTypeFace = ResourcesCompat.getFont(mContext, fontResourceId);
+                    try {
+                        mTextTypeFace = ResourcesCompat.getFont(mContext, fontResourceId);
+                    } catch (Resources.NotFoundException e) {
+                        mTextTypeFace = Utils.findFont(mContext, mDefaultTextFont, null);
+                        e.printStackTrace();
+                    }
                 } else {
                     mTextTypeFace = Utils.findFont(mContext, textFontFamily, mDefaultTextFont);
                 }
